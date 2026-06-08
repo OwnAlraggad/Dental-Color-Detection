@@ -3,6 +3,11 @@
 
 A command‑line tool that finds the four upper incisors in a dental photo, extracts their LAB colour values, and draws an annotated output image.
 
+<div align="center">
+  <img src="images/sample_01.jpg" width="45%" alt="Input photo"/>
+  <img src="images/result_01.jpg" width="45%" alt="Annotated output"/>
+</div>
+
 **Important:** The script works best when MediaPipe can detect a full face. A fallback exists for cropped images (e.g., close‑up dental photos), but it's experimental and may fail. For reliable results, make sure the image shows the full face (at least from forehead to chin).
 
 ## What it does
