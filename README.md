@@ -69,23 +69,27 @@ For batch:
 python -m dental_color.cli images/ --batch --json summary.json
 ```
 
-### Disable white balance
+### Enable white balance
 
-By default, the script applies a gray‑world white balance to normalise lighting. Turn it off if you need original, unmodified colours:
+By default, the script uses the unmodified colours. Turn it on if you need a gray‑world white balance to normalise lighting:
 
 ```bash
-python -m dental_color.cli photo.jpg --no-white-balance
+python -m dental_color.cli photo.jpg --white-balance
 ```
+<div align="center">
+  <img src="images/result_01.jpg" width="45%" alt="Input photo"/>
+  <img src="images/result_01_white_balanced.jpg" width="45%" alt="Annotated output"/>
+</div>
 
 ## Command‑line options
 
-| Argument | Effect |
-|----------|--------|
-| `input` | Image file or directory (required) |
+| Argument | Effect                                          |
+|----------|-------------------------------------------------|
+| `input` | Image file or directory (required)              |
 | `--output` | Output image file (single) or directory (batch) |
-| `--no-white-balance` | Skip automatic white balance |
-| `--json` | Save detailed results as JSON |
-| `--batch` | Process all images in the input directory |
+| `--white-balance` | apply white balance                             |
+| `--json` | Save detailed results as JSON                   |
+| `--batch` | Process all images in the input directory       |
 
 ## Output example
 
