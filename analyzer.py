@@ -3,6 +3,8 @@
 from typing import List, Optional, Tuple, Dict, Any
 import cv2
 import numpy as np
+from sympy.codegen.ast import continue_
+
 from image_io import load_image, white_balance
 from mouth_detection import detect_mouth_with_mediapipe, get_mouth_region_fallback
 from segmentation import extract_enamel_mask, separate_upper_teeth
@@ -15,7 +17,7 @@ from utils import TOOTH_LABELS
 class DentalColorAnalyzer:
     """Analyzer that detects upper incisors and extracts LAB colours."""
 
-    def __init__(self, apply_white_balance: bool = True):
+    def __init__(self, apply_white_balance: bool = False):
         self.apply_white_balance = apply_white_balance
 
     def _locate_mouth_region(self, img: np.ndarray) -> Tuple[np.ndarray, Tuple[int, int, int, int], int, int]:
@@ -36,10 +38,8 @@ class DentalColorAnalyzer:
         """
         # Load and optionally white balance
         img = load_image(image_path)
-        if self.apply_white_balance:
-            img_processed = white_balance(img)
-        else:
-            img_processed = img.copy()
+        img_processed = white_balance(img)
+
 
         # Locate mouth
         mouth_mask, (y0, y1, x0, x1), midline_ref_x, mouth_width = self._locate_mouth_region(img_processed)
@@ -56,6 +56,11 @@ class DentalColorAnalyzer:
         # Find boundaries and split
         boundaries = find_tooth_boundaries(upper_teeth_mask, midline_ref_x, mouth_width)
         tooth_masks = build_tooth_masks(upper_teeth_mask, boundaries)
+
+        if self.apply_white_balance:
+            pass
+        else:
+            img_processed = img.copy()
 
         # Sample LAB values
         lab_values = sample_lab(img_processed, tooth_masks)

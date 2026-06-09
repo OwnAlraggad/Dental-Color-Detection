@@ -65,9 +65,9 @@ def process_batch(analyzer: DentalColorAnalyzer, input_dir: str, output_dir: str
 
 def main():
     parser = argparse.ArgumentParser(description="Dental Color Analyzer - Upper incisor LAB extraction")
-    parser.add_argument("input", help="Input image file or directory (for batch mode)")
+    parser.add_argument("--input", help="Input image file or directory (for batch mode)")
     parser.add_argument("--output", help="Output image file (single mode) or directory (batch mode)")
-    parser.add_argument("--no-white-balance", action="store_true", help="Disable white balance")
+    parser.add_argument("--white-balance", action="store_true", help="Enable white balance")
     parser.add_argument("--json", help="Save results as JSON (for single: file path; for batch: summary file path)")
     parser.add_argument("--batch", action="store_true", help="Process all images in input directory")
 
@@ -78,7 +78,7 @@ def main():
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
         sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
 
-    analyzer = DentalColorAnalyzer(apply_white_balance=not args.no_white_balance)
+    analyzer = DentalColorAnalyzer(apply_white_balance= args.white_balance)
 
     if args.batch:
         input_dir = args.input
