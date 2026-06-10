@@ -23,28 +23,28 @@ A command‑line tool that finds the four upper incisors in a dental photo, extr
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.9+
 - OpenCV  
-- MediaPipe  
+- MediaPipe  (0.10.14 =< X < 0.10.30)
 - NumPy  
 - SciPy  
 
 Install everything with:
 
 ```bash
-pip install opencv-python mediapipe numpy scipy
+pip install -r requirements.txt
 ```
 
 ## Installation
 
-Clone the repository (or copy the `dental_color/` folder) and run the CLI module directly.
+Clone the repository and run the CLI module directly.
 
 ## Usage
 
 ### Single image
 
 ```bash
-python -m dental_color.cli my_photo.jpg --output result.jpg
+python cli.py image.jpg --output result.jpg
 ```
 
 This creates `result.jpg` with overlays and prints the LAB values to the console.
@@ -52,7 +52,7 @@ This creates `result.jpg` with overlays and prints the LAB values to the console
 ### Batch processing
 
 ```bash
-python -m dental_color.cli /path/to/images --batch --output /path/to/output
+python -cli.py /path/to/images --batch --output /path/to/output
 ```
 
 ### Save JSON results
@@ -60,13 +60,13 @@ python -m dental_color.cli /path/to/images --batch --output /path/to/output
 For a single image:
 
 ```bash
-python -m dental_color.cli photo.jpg --json data.json
+python cli.py image.jpg --json data.json
 ```
 
 For batch:
 
 ```bash
-python -m dental_color.cli images/ --batch --json summary.json
+python cli.py images/ --batch --json summary.json
 ```
 
 ### Enable white balance
@@ -74,22 +74,22 @@ python -m dental_color.cli images/ --batch --json summary.json
 By default, the script uses the unmodified colours. Turn it on if you need a gray‑world white balance to normalise lighting:
 
 ```bash
-python -m dental_color.cli photo.jpg --white-balance
+python cli.py image.jpg --white-balance
 ```
 <div align="center">
   <img src="images/result_01.jpg" width="45%" alt="Input photo"/>
   <img src="images/result_01_white_balanced.jpg" width="45%" alt="Annotated output"/>
 </div>
 
-## Command‑line options
+## Command‑line options 
 
-| Argument | Effect                                          |
-|----------|-------------------------------------------------|
-| `input` | Image file or directory (required)              |
-| `--output` | Output image file (single) or directory (batch) |
+| Argument          | Effect                                          |
+|-------------------|-------------------------------------------------|
+| `--input`         | Image file or directory (required)              |
+| `--output`        | Output image file (single) or directory (batch) |
 | `--white-balance` | apply white balance                             |
-| `--json` | Save detailed results as JSON                   |
-| `--batch` | Process all images in the input directory       |
+| `--json`          | Save detailed results as JSON                   |
+| `--batch`         | Process all images in the input directory       |
 
 ## Output example
 
@@ -109,7 +109,7 @@ JSON output:
 
 ```json
 {
-  "image_path": "my_photo.jpg",
+  "image_path": "image.jpg",
   "white_balance_applied": true,
   "tooth_lab_values": {
     "UL Lateral": {"L": 78.2, "a": 2.1, "b": 15.3},
